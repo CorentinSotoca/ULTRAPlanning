@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "icalendar": "^0.7.1",
+    "node-telegram-bot-api": "^0.54.0"
+  }
+}
