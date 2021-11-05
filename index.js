@@ -1,5 +1,6 @@
 process.env.NTBA_FIX_319 = 1;
 const TelegramBot = require("node-telegram-bot-api");
+const os=require('os')
 const ics = require("icalendar");
 const config = require("./config");
 let request = require("request");
@@ -110,6 +111,6 @@ function update() {
 	);
 }
 
-logToTelegram("UltraPlanning viens de demarrer !")
+logToTelegram("🤖 UltraPlanning viens de demarrer depuis", os.hostname()," !")
 update();
 setInterval(update, 3600000);
