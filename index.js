@@ -35,7 +35,7 @@ function update(){
 				resWoAuto.addComponent(event);
 			}
 		}
-		
+		console.log(resWoAuto)
 		try {
 			const data = fs.writeFileSync("result/resWoAuto.ics", resWoAuto);
 			//file written successfully
