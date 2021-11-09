@@ -69,7 +69,10 @@ function update() {
 
 			// On crée les var de resultat
 			let auto = new ics.iCalendar(); // Celle ci contient toutes les autonomies
-			let resWoAuto = new ics.iCalendar(); // Et celle ci contient toutes les autres heures
+			let controle = new ics.iCalendar(); // DS, CTP et interro
+			let amphi = new ics.iCalendar(); // Amphi
+			let tdTp = new ics.iCalendar(); // Et celle ci contient toutes les autres heures
+
 
 			for (let i = 0; i < source.components.VEVENT.length; i++) {
 				let event = source.components.VEVENT[i]; // Creation d'une variable event ou on copie la valeur de l'ics
@@ -84,17 +87,22 @@ function update() {
 					text = event.properties.SUMMARY[0].value;
 				}
 
+				// console.log(event.properties.LOCATION[0].value)
 				if (text.search("Autonomie") != -1) {
 					auto.addComponent(event);
-				} else {
-					resWoAuto.addComponent(event);
+				}else if(event.properties.LOCATION[0].value.includes("1A02")){
+					controle.addComponent(event);
+				} else if(event.properties.LOCATION[0].value.includes("1A") || event.properties.LOCATION[0].value.includes("Amphis")){
+					amphi.addComponent(event);
+				}else {
+					tdTp.addComponent(event);
 				}
 			}
 
 			try {
 				const data = fs.writeFileSync(
-					"result/resWoAuto.ics",
-					resWoAuto
+					"result/tdTp.ics",
+					tdTp
 				);
 				//file written successfully
 			} catch (err) {
@@ -103,6 +111,26 @@ function update() {
 
 			try {
 				const data = fs.writeFileSync("result/auto.ics", auto);
+				//file written successfully
+			} catch (err) {
+				console.error(err);
+			}
+
+			try {
+				const data = fs.writeFileSync(
+					"result/amphi.ics",
+					amphi
+				);
+				//file written successfully
+			} catch (err) {
+				console.error(err);
+			}
+
+			try {
+				const data = fs.writeFileSync(
+					"result/controle.ics",
+					controle
+				);
 				//file written successfully
 			} catch (err) {
 				console.error(err);
