@@ -81,56 +81,56 @@ telegram.on("message", (msg) => {
 
 //----------------------------Traitement d'ical---------------------------------------
 function update() {
-	request(icsLinks[idx], function (err, res, body) {
-		for(let i=0;i<5;i++){
+	for (let i = 0; i < 5; i++) {
+		request(icsLinks[idx], function (err, res, body) {
 			let dirName;
 			switch (i) {
 				case 0:
-					dirName='A';
+					dirName = "A";
 					break;
 				case 1:
-					dirName='B';
+					dirName = "B";
 					break;
 				case 2:
-					dirName='C';
+					dirName = "C";
 					break;
 				case 3:
-					dirName='D';
+					dirName = "D";
 					break;
 				case 4:
-					dirName='E';
+					dirName = "E";
 					break;
 				case 5:
-					dirName='F';
+					dirName = "F";
 					break;
 				default:
-					dirName='A';
+					dirName = "A";
 			}
-	
+
 			if (err != null) {
 				console.error(err);
 				return -1;
 			}
-	
+
 			let source;
-	
+
 			try {
 				source = ics.parse_calendar(body); // On le parse
 			} catch (error) {
 				console.error(error);
 				return;
 			}
-	
+
 			// On crée les var de resultat
 			let auto = new ics.iCalendar(); // Celle ci contient toutes les autonomies
 			let controle = new ics.iCalendar(); // DS, CTP et interro
 			let amphi = new ics.iCalendar(); // Amphi
 			let tdTp = new ics.iCalendar(); // Et celle ci contient toutes les autres heures
-	
+
 			for (let i = 0; i < source.components.VEVENT.length; i++) {
 				let event = source.components.VEVENT[i]; // Creation d'une variable event ou on copie la valeur de l'ics
 				let text = event.properties.SUMMARY[0].value;
-	
+
 				let tiret = text.search("-");
 				if (tiret != -1) {
 					event.properties.SUMMARY[0].value = text.substring(
@@ -139,10 +139,12 @@ function update() {
 					);
 					text = event.properties.SUMMARY[0].value;
 				}
-	
+
 				if (text.search("Autonomie") != -1) {
 					auto.addComponent(event);
-				} else if (event.properties.LOCATION[0].value.includes("1A02")) {
+				} else if (
+					event.properties.LOCATION[0].value.includes("1A02")
+				) {
 					controle.addComponent(event);
 				} else if (
 					event.properties.LOCATION[0].value.includes("1A") ||
@@ -153,36 +155,48 @@ function update() {
 					tdTp.addComponent(event);
 				}
 			}
-	
+
 			try {
-				const data = fs.writeFileSync("result/"+dirName+"/tdTp.ics", tdTp);
+				const data = fs.writeFileSync(
+					"result/" + dirName + "/tdTp.ics",
+					tdTp
+				);
 				//file written successfully
 			} catch (err) {
 				console.error(err);
 			}
-	
+
 			try {
-				const data = fs.writeFileSync("result/"+dirName+"/auto.ics", auto);
+				const data = fs.writeFileSync(
+					"result/" + dirName + "/auto.ics",
+					auto
+				);
 				//file written successfully
 			} catch (err) {
 				console.error(err);
 			}
-	
+
 			try {
-				const data = fs.writeFileSync("result/"+dirName+"/amphi.ics", amphi);
+				const data = fs.writeFileSync(
+					"result/" + dirName + "/amphi.ics",
+					amphi
+				);
 				//file written successfully
 			} catch (err) {
 				console.error(err);
 			}
-	
+
 			try {
-				const data = fs.writeFileSync("result/"+dirName+"/controle.ics", controle);
+				const data = fs.writeFileSync(
+					"result/" + dirName + "/controle.ics",
+					controle
+				);
 				//file written successfully
 			} catch (err) {
 				console.error(err);
 			}
-		}
-	});
+		});
+	}
 }
 
 logToTelegram("🤖 UltraPlanning viens de demarrer depuis", os.hostname(), " !");
