@@ -8,7 +8,6 @@ let fs = require("fs");
 
 let telegramBotToken = config.telegramBotToken;
 let telegramChatId = config.telegramChatId;
-let idx = 0;
 const icsLinks = [
 	config.icsLink[0],
 	config.icsLink[1],
@@ -82,7 +81,7 @@ telegram.on("message", (msg) => {
 //----------------------------Traitement d'ical---------------------------------------
 function update() {
 	for (let i = 0; i < 5; i++) {
-		request(icsLinks[idx], function (err, res, body) {
+		request(icsLinks[i], function (err, res, body) {
 			let dirName;
 			switch (i) {
 				case 0:
