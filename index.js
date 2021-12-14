@@ -132,7 +132,8 @@ function update() {
 
 				let tiret = text.search("-");
 				if (tiret != -1) {
-					event.properties.SUMMARY[0].value = text.substring(
+					let location = event.properties.LOCATION[0].value;
+					event.properties.SUMMARY[0].value = location + " - " +text.substring(
 						tiret + 2,
 						text.length
 					);
