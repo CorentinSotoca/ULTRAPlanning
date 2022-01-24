@@ -15,6 +15,12 @@ const icsLinks = [
 	config.icsLink[3],
 	config.icsLink[4],
 	config.icsLink[5],
+	config.icsLink[6],
+	config.icsLink[7],
+	config.icsLink[8],
+	config.icsLink[9],
+	config.icsLink[10],
+	config.icsLink[11],
 ];
 
 // --------------- Telegram Bot ---------------
@@ -85,25 +91,43 @@ function update() {
 			let dirName;
 			switch (i) {
 				case 0:
-					dirName = "A";
+					dirName = "A1";
 					break;
 				case 1:
-					dirName = "B";
+					dirName = "B1";
 					break;
 				case 2:
-					dirName = "C";
+					dirName = "C1";
 					break;
 				case 3:
-					dirName = "D";
+					dirName = "D1";
 					break;
 				case 4:
-					dirName = "E";
+					dirName = "E1";
 					break;
 				case 5:
-					dirName = "F";
+					dirName = "F1";
+					break;
+				case 6:
+					dirName = "A2";
+					break;
+				case 7:
+					dirName = "B2";
+					break;
+				case 8:
+					dirName = "C2";
+					break;
+				case 9:
+					dirName = "D2";
+					break;
+				case 10:
+					dirName = "E2";
+					break;
+				case 11:
+					dirName = "F2";
 					break;
 				default:
-					dirName = "A";
+					dirName = "A1";
 			}
 
 			if (err != null) {
@@ -112,6 +136,7 @@ function update() {
 			}
 
 			let source;
+
 
 			try {
 				source = ics.parse_calendar(body); // On le parse
