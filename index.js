@@ -86,7 +86,7 @@ telegram.on("message", (msg) => {
 
 //----------------------------Traitement d'ical---------------------------------------
 function update() {
-	for (let i = 0; i < 5; i++) {
+	for (let i = 0; i < 11; i++) {
 		request(icsLinks[i], function (err, res, body) {
 			let dirName;
 			switch (i) {
